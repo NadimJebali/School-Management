@@ -8,7 +8,7 @@ import {
 } from "recharts";
 
 const data = [
-  { name: "Total", count: 100, fill: "#E5E7EB" }, // Light gray as background arc
+  { name: "Total", count: 100, fill: "white" },
   { name: "Girls", count: 80, fill: "#FAE27C" },
   { name: "Boys", count: 20, fill: "#C3EBFA" },
 ];
