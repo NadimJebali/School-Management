@@ -1,4 +1,4 @@
-import { parentsData, role } from "@/app/lib/data";
+import { classesData, role } from "@/app/lib/data";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch"
@@ -7,23 +7,23 @@ import Link from "next/link";
 
 const columns = [
   {
-    header: "Info",
-    accessor: "info",
+    header: "Class Name",
+    accessor: "name",
   },
   {
-    header: "Student Names",
-    accessor: "students",
+    header: "Capacity",
+    accessor: "capacity",
     className: "hidden md:table-cell",
   },
   {
-    header: "Phone",
-    accessor: "phone",
-    className: "hidden lg:table-cell",
+    header: "Grade",
+    accessor: "grade",
+    className: "hidden md:table-cell",
   },
   {
-    header: "Address",
-    accessor: "address",
-    className: "hidden lg:table-cell",
+    header: "Supervisor",
+    accessor: "supervisor",
+    className: "hidden md:table-cell",
   },
   {
     header: "Actions",
@@ -31,39 +31,31 @@ const columns = [
   },
 ];
 
-type Parent = {
+type Class = {
   id: number;
   name: string;
-  email?: string;
-  students: string[];
-  phone: string;
-  address: string;
+  capacity: number;
+  grade: number;
+  supervisor: string;
 };
 
-const ParentsList = () => {
+const ClassesList = () => {
 
 
-  const renderRow = (item:Parent) => (
+  const renderRow = (item:Class) => (
     <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]">
-      <td className="flex items-center gap-4 p-4">
-        <div className="flex flex-col">
-          <h3 className="text-gray-800 font-semibold">
-            {item.name}
-          </h3>
-          <p className="text-xs text-gray-500">
-            {item?.email}
-          </p>
-        </div>
+      <td className="text-gray-800 flex items-center gap-4 p-4">
+        {item.name}
       </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.students.join(",")}
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.phone}
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.address}
-      </td>
+      <td className="text-gray-800  hidden sm:table-cell">
+        {item.capacity}
+        </td>
+        <td className="text-gray-800  hidden sm:table-cell">
+        {item.grade}
+        </td>
+        <td className="text-gray-800  hidden sm:table-cell">
+        {item.supervisor}
+        </td>
       <td className="">
         <div className="flex items-center gap-2">
           <Link href={`/list/teachers/${item.id}`}>
@@ -86,7 +78,7 @@ const ParentsList = () => {
     <div className='bg-white p-4 rounded-md flex-1 m-4 mt-0'>
       {/* top section */}
       <div className="flex items-center justify-between">
-        <h1 className="hidden md:block text-lg font-semibold text-gray-800">All Parents</h1>
+        <h1 className="hidden md:block text-lg font-semibold text-gray-800">All Classes</h1>
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
@@ -104,11 +96,11 @@ const ParentsList = () => {
         </div>
       </div>
       {/* list */}
-        <Table columns={columns} renderRow={renderRow} data={parentsData}/>
+        <Table columns={columns} renderRow={renderRow} data={classesData}/>
       {/* pagination */}
         <Pagination />
     </div>
   );
 };
 
-export default ParentsList
+export default ClassesList
