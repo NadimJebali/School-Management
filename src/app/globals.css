@@ -74,3 +74,26 @@ body {
 .react-calendar__month-view__days__day--weekend {
   color: #ef4444 !important; /* Tailwind red-500 */
 }
+
+.rbc-time-view {
+  color: #000 !important; /* Force all text to black */
+}
+
+.rbc-btn-group button {
+  color: #000 !important; /* Toolbar buttons */
+}
+
+.rbc-off-range,
+.rbc-off-range-bg {
+  color: #000 !important;
+  background-color: #f3f4f6 !important; /* optional: light gray bg for clarity */
+}
+
+.rbc-event {
+  background-color: #3b82f6 !important;
+  color: #fff !important;
+}
+
+.rbc-toolbar-label{
+  color: #000 !important;
+}
