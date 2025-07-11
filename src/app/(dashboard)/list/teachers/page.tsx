@@ -88,12 +88,12 @@ const TeacherList = () => {
     <td className="px-2">
       <div className="flex items-center gap-2">
         <Link href={`/list/teachers/${item.id}`}>
-          <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
+          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#A1D9FF] hover:cursor-pointer bg-[#C3EBFA]">
             <Image src="/view.png" alt="view" height={16} width={16} />
           </button>
         </Link>
         {role === "admin" && (
-          <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF]">
+          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#A8A7FF] hover:cursor-pointer bg-[#CFCEFF]">
             <Image src="/delete.png" alt="delete" height={16} width={16} />
           </button>
         )}
@@ -111,13 +111,13 @@ const TeacherList = () => {
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#FAE27C]">
+            <button className="w-8 h-8 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#FAE27C]">
               <Image src="/filter.png" alt="logo" width={14} height={14} />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#FAE27C]">
+            <button className="w-8 h-8 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#FAE27C]">
               <Image src="/sort.png" alt="logo" width={14} height={14} />
             </button>
-            {role === "admin" && (<button className="w-8 h-8 flex items-center justify-center rounded-full bg-[#FAE27C]">
+            {role === "admin" && (<button className="w-8 h-8 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#FAE27C]">
               <Image src="/plus.png" alt="logo" width={14} height={14} />
             </button>
             )}
