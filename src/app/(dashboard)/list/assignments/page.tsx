@@ -53,12 +53,12 @@ const AssignmentsList = () => {
       <td>
         <div className="flex items-center gap-2">
           <Link href={`/list/teachers/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center hover:cursor-pointer hover:bg-[#A1D9FF] rounded-full bg-[#C3EBFA]">
+            <button className="w-7 h-7 flex items-center justify-center hover:cursor-pointer rounded-full bg-[#C3EBFA]">
               <Image src="/edit.png" alt="Edit assignment" height={16} width={16} />
             </button>
           </Link>
           {role === "admin" && (
-            <button className="w-7 h-7 flex items-center justify-center hover:cursor-pointer hover:bg-[#A8A7FF] rounded-full bg-[#CFCEFF]">
+            <button className="w-7 h-7 flex items-center justify-center hover:cursor-pointer rounded-full bg-[#CFCEFF]">
               <Image src="/delete.png" alt="Delete assignment" height={16} width={16} />
             </button>
           )}

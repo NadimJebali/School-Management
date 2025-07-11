@@ -64,12 +64,12 @@ const ClassesList = () => {
     <td className="px-4">
       <div className="flex items-center gap-2">
         <Link href={`/list/classes/${item.id}`}>
-          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer hover:bg-[#A1D9FF]  bg-[#C3EBFA]">
+          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#C3EBFA]">
             <Image src="/edit.png" alt="Edit" height={16} width={16} />
           </button>
         </Link>
         {role === "admin" && (
-          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer hover:bg-[#A8A7FF] bg-[#CFCEFF]">
+          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#CFCEFF]">
             <Image src="/delete.png" alt="Delete" height={16} width={16} />
           </button>
         )}
