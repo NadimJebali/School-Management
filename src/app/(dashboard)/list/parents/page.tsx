@@ -43,43 +43,49 @@ type Parent = {
 const ParentsList = () => {
 
 
-  const renderRow = (item:Parent) => (
-    <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]">
-      <td className="flex items-center gap-4 p-4">
-        <div className="flex flex-col">
-          <h3 className="text-gray-800 font-semibold">
-            {item.name}
-          </h3>
-          <p className="text-xs text-gray-500">
-            {item?.email}
-          </p>
-        </div>
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.students.join(",")}
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.phone}
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.address}
-      </td>
-      <td className="">
-        <div className="flex items-center gap-2">
-          <Link href={`/list/teachers/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
-              <Image src="/edit.png" alt="" height={16} width={16}/>
-            </button>
-          </Link>
-          {role === "admin" && (
+  const renderRow = (item: Parent) => (
+  <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]">
+    {/* Parent Name & Email - Always visible */}
+    <td className="flex items-center gap-4 p-4">
+      <div className="flex flex-col">
+        <h3 className="text-gray-800 font-semibold">{item.name}</h3>
+        <p className="text-xs text-gray-500">{item.email}</p>
+      </div>
+    </td>
+
+    {/* Students - visible from md and up */}
+    <td className="hidden md:table-cell text-gray-800">
+      {item.students.join(", ")}
+    </td>
+
+    {/* Phone - visible from lg and up */}
+    <td className="hidden lg:table-cell text-gray-800">
+      {item.phone}
+    </td>
+
+    {/* Address - visible from lg and up */}
+    <td className="hidden lg:table-cell text-gray-800">
+      {item.address}
+    </td>
+
+    {/* Actions - Always visible */}
+    <td className="px-2">
+      <div className="flex items-center gap-2">
+        <Link href={`/list/parents/${item.id}`}>
+          <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
+            <Image src="/edit.png" alt="edit" height={16} width={16} />
+          </button>
+        </Link>
+        {role === "admin" && (
           <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF]">
-              <Image src="/delete.png" alt="" height={16} width={16}/>
-            </button>
-            )}
-        </div>
-      </td>
-    </tr>
-  );
+            <Image src="/delete.png" alt="delete" height={16} width={16} />
+          </button>
+        )}
+      </div>
+    </td>
+  </tr>
+);
+
 
 
   return (

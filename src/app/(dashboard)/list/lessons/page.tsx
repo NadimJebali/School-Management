@@ -8,7 +8,7 @@ import Link from "next/link";
 const columns = [
   {
     header: "Subject Name",
-    accessor: "name",
+    accessor: "subject", // matches your Lesson type property
   },
   {
     header: "Class",
@@ -17,7 +17,7 @@ const columns = [
   {
     header: "Teacher",
     accessor: "teacher",
-    className: "hidden md:table-cell",
+    className: "hidden sm:table-cell", // match row visibility below
   },
   {
     header: "Actions",
@@ -27,7 +27,7 @@ const columns = [
 
 type Lesson = {
   id: number;
-  subject: string;
+  subject: string;  // changed from 'name' to 'subject' to align with data
   class: string;
   teacher: string;
 };
@@ -35,29 +35,29 @@ type Lesson = {
 const LessonsList = () => {
 
 
-  const renderRow = (item:Lesson) => (
+  const renderRow = (item: Lesson) => (
     <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]">
       <td className="text-gray-800 flex items-center gap-4 p-4">
         {item.subject}
       </td>
       <td className="text-gray-800">
         {item.class}
-        </td>
-        <td className="text-gray-800  hidden sm:table-cell">
+      </td>
+      <td className="text-gray-800 hidden sm:table-cell">
         {item.teacher}
-        </td>
-      <td className="">
+      </td>
+      <td>
         <div className="flex items-center gap-2">
           <Link href={`/list/teachers/${item.id}`}>
             <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
-              <Image src="/edit.png" alt="" height={16} width={16}/>
+              <Image src="/edit.png" alt="Edit" height={16} width={16} />
             </button>
           </Link>
           {role === "admin" && (
-          <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF]">
-              <Image src="/delete.png" alt="" height={16} width={16}/>
+            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF]">
+              <Image src="/delete.png" alt="Delete" height={16} width={16} />
             </button>
-            )}
+          )}
         </div>
       </td>
     </tr>
