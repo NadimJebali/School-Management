@@ -38,7 +38,7 @@ const EventsList = () => {
         <div className="flex items-center gap-2">
           <Link href={`/list/events/${item.id}`}>
             <button
-              className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA] hover:bg-[#A1D9FF] hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA] hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400"
               aria-label={`Edit event ${item.title}`}
               title="Edit"
             >
@@ -47,7 +47,7 @@ const EventsList = () => {
           </Link>
           {role === "admin" && (
             <button
-              className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF] hover:bg-[#A8A7FF] hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF] hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-400"
               aria-label={`Delete event ${item.title}`}
               title="Delete"
             >

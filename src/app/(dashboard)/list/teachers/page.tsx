@@ -1,4 +1,5 @@
 import { role, teachersData } from "@/app/lib/data";
+import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch"
@@ -88,14 +89,15 @@ const TeacherList = () => {
     <td className="px-2">
       <div className="flex items-center gap-2">
         <Link href={`/list/teachers/${item.id}`}>
-          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#A1D9FF] hover:cursor-pointer bg-[#C3EBFA]">
+          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#C3EBFA]">
             <Image src="/view.png" alt="view" height={16} width={16} />
           </button>
         </Link>
         {role === "admin" && (
-          <button className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#A8A7FF] hover:cursor-pointer bg-[#CFCEFF]">
-            <Image src="/delete.png" alt="delete" height={16} width={16} />
-          </button>
+          // <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#CFCEFF]">
+          //   <Image src="/delete.png" alt="delete" height={16} width={16} />
+          // </button>
+          <FormModal table="student" type="delete" id={item.id}/>
         )}
       </div>
     </td>
@@ -117,9 +119,11 @@ const TeacherList = () => {
             <button className="w-8 h-8 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#FAE27C]">
               <Image src="/sort.png" alt="logo" width={14} height={14} />
             </button>
-            {role === "admin" && (<button className="w-8 h-8 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#FAE27C]">
-              <Image src="/plus.png" alt="logo" width={14} height={14} />
-            </button>
+            {role === "admin" && (
+            //   <button className="w-8 h-8 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#FAE27C]">
+            //   <Image src="/plus.png" alt="logo" width={14} height={14} />
+            // </button>
+            <FormModal table="student" type="create"/>
             )}
           </div>
         </div>

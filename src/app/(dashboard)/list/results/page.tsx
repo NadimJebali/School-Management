@@ -41,12 +41,12 @@ const ResultsList = () => {
       <td>
         <div className="flex items-center gap-2">
           <Link href={`/list/teachers/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#A1D9FF] hover:cursor-pointer bg-[#C3EBFA]">
+            <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#C3EBFA]">
               <Image src="/edit.png" alt="Edit result" height={16} width={16} />
             </button>
           </Link>
           {role === "admin" && (
-            <button className="w-7 h-7 flex items-center justify-center rounded-full hover:bg-[#A8A7FF] hover:cursor-pointer bg-[#CFCEFF]">
+            <button className="w-7 h-7 flex items-center justify-center rounded-full hover:cursor-pointer bg-[#CFCEFF]">
               <Image src="/delete.png" alt="Delete result" height={16} width={16} />
             </button>
           )}
