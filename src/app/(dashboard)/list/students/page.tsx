@@ -51,47 +51,53 @@ type Student = {
 const StudentList = () => {
 
 
-  const renderRow = (item:Student) => (
-    <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]">
-      <td className="flex items-center gap-4 p-4">
-        <Image src={item.photo} alt="" width={40} height={40} className="md:hidden xl:block w-10 h-10 rounded-full object-cover"/>
-        <div className="flex flex-col">
-          <h3 className="text-gray-800 font-semibold">
-            {item.name}
-          </h3>
-          <p className="text-xs text-gray-500">
-            {item?.class}
-          </p>
-        </div>
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.studentId}
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.grade}
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.phone}
-      </td>
-      <td className="hidden text-gray-800 md:table-cell">
-        {item.address}
-      </td>
-      <td className="">
-        <div className="flex items-center gap-2">
-          <Link href={`/list/teachers/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
-              <Image src="/view.png" alt="" height={16} width={16}/>
-            </button>
-          </Link>
-          {role === "admin" && (
+ const renderRow = (item: Student) => (
+  <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]">
+    {/* Info (Always visible) */}
+    <td className="flex items-center gap-4 p-4">
+      <Image
+        src={item.photo}
+        alt={item.name}
+        width={40}
+        height={40}
+        className="hidden sm:block w-10 h-10 rounded-full object-cover"
+      />
+      <div className="flex flex-col">
+        <h3 className="text-gray-800 font-semibold">{item.name}</h3>
+        <p className="text-xs text-gray-500">{item.class}</p>
+      </div>
+    </td>
+
+    {/* Student ID (visible from md and up) */}
+    <td className="hidden md:table-cell text-gray-800">{item.studentId}</td>
+
+    {/* Grade (visible from md and up) */}
+    <td className="hidden md:table-cell text-gray-800">{item.grade}</td>
+
+    {/* Phone (visible from lg and up) */}
+    <td className="hidden lg:table-cell text-gray-800">{item.phone}</td>
+
+    {/* Address (visible from lg and up) */}
+    <td className="hidden lg:table-cell text-gray-800">{item.address}</td>
+
+    {/* Actions (Always visible) */}
+    <td className="px-2">
+      <div className="flex items-center gap-2">
+        <Link href={`/list/students/${item.id}`}>
+          <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
+            <Image src="/view.png" alt="view" height={16} width={16} />
+          </button>
+        </Link>
+        {role === "admin" && (
           <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF]">
-              <Image src="/delete.png" alt="" height={16} width={16}/>
-            </button>
-            )}
-        </div>
-      </td>
-    </tr>
-  );
+            <Image src="/delete.png" alt="delete" height={16} width={16} />
+          </button>
+        )}
+      </div>
+    </td>
+  </tr>
+);
+
 
 
   return (

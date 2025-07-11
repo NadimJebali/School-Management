@@ -8,28 +8,29 @@ import Link from "next/link";
 const columns = [
   {
     header: "Class Name",
-    accessor: "name",
+    accessor: "name", // Always visible
   },
   {
     header: "Capacity",
     accessor: "capacity",
-    className: "hidden md:table-cell",
+    className: "hidden sm:table-cell", // Show from small screens (≥640px)
   },
   {
     header: "Grade",
     accessor: "grade",
-    className: "hidden md:table-cell",
+    className: "hidden sm:table-cell", // Match visibility with Capacity
   },
   {
     header: "Supervisor",
     accessor: "supervisor",
-    className: "hidden md:table-cell",
+    className: "hidden md:table-cell", // Show from medium screens (≥768px)
   },
   {
     header: "Actions",
-    accessor: "action",
+    accessor: "action", // Always visible
   },
 ];
+
 
 type Class = {
   id: number;
@@ -42,36 +43,41 @@ type Class = {
 const ClassesList = () => {
 
 
-  const renderRow = (item:Class) => (
-    <tr key={item.id} className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]">
-      <td className="text-gray-800 flex items-center gap-4 p-4">
-        {item.name}
-      </td>
-      <td className="text-gray-800  hidden sm:table-cell">
-        {item.capacity}
-        </td>
-        <td className="text-gray-800  hidden sm:table-cell">
-        {item.grade}
-        </td>
-        <td className="text-gray-800  hidden sm:table-cell">
-        {item.supervisor}
-        </td>
-      <td className="">
-        <div className="flex items-center gap-2">
-          <Link href={`/list/teachers/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
-              <Image src="/edit.png" alt="" height={16} width={16}/>
-            </button>
-          </Link>
-          {role === "admin" && (
+  const renderRow = (item: Class) => (
+  <tr
+    key={item.id}
+    className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]"
+  >
+    {/* Class Name - always visible */}
+    <td className="text-black p-4">{item.name}</td>
+
+    {/* Capacity - visible on small screens and up */}
+    <td className="text-black hidden sm:table-cell">{item.capacity}</td>
+
+    {/* Grade - visible on small screens and up */}
+    <td className="text-black hidden sm:table-cell">{item.grade}</td>
+
+    {/* Supervisor - visible on medium screens and up */}
+    <td className="text-black hidden md:table-cell">{item.supervisor}</td>
+
+    {/* Actions - always visible */}
+    <td className="px-4">
+      <div className="flex items-center gap-2">
+        <Link href={`/list/classes/${item.id}`}>
+          <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#C3EBFA]">
+            <Image src="/edit.png" alt="Edit" height={16} width={16} />
+          </button>
+        </Link>
+        {role === "admin" && (
           <button className="w-7 h-7 flex items-center justify-center rounded-full bg-[#CFCEFF]">
-              <Image src="/delete.png" alt="" height={16} width={16}/>
-            </button>
-            )}
-        </div>
-      </td>
-    </tr>
-  );
+            <Image src="/delete.png" alt="Delete" height={16} width={16} />
+          </button>
+        )}
+      </div>
+    </td>
+  </tr>
+);
+
 
 
   return (
