@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import TeacherForm from "./forms/TeacherForm";
 
 const FormModal = ({
   table,
@@ -33,21 +34,42 @@ const FormModal = ({
       ? "bg-[#C3EBFA]"
       : "bg-[#CFCEFF]";
 
-      const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const Form = ()=>{
+    return type === "delete" && id ? 
+    (<form action="" className="p-4 flex flex-col gap-4 ">
+      <span className="text-center font-medium text-gray-800">All data will be lost. Are you sure you want to delete this {table}?</span>
+      <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">Delete</button>
+    </form>
+    ) : (
+      <TeacherForm type="create" />
+    );
+  }
+
   return (
-    <button
-      className={`${size} flex items-center justify-center rounded-full hover:cursor-pointer ${bgColor}`}
-      onClick={()=> setOpen(true)}
-    >
-      <Image src={`/${type}.png`} alt={`${type} icon`} width={16} height={16} />
-      {
-      open && <div className="w-screen h-screen absolute left-0 top-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-        <div className="bg-white p-4 rounded-md text-gray-800">
-          hello
-        </div>  
-      </div>
-      }
-    </button>
+    <>
+      <button
+        className={`${size} flex items-center justify-center rounded-full hover:cursor-pointer ${bgColor}`}
+        onClick={() => setOpen(true)}
+      >
+        <Image src={`/${type}.png`} alt={`${type} icon`} width={16} height={16} />
+      </button>
+
+      {open && (
+        <div className="w-screen h-screen fixed left-0 top-0 bg-black/50 z-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded-md relative text-gray-800 w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%]">
+            <Form />
+            <div
+              className="absolute top-4 right-4 cursor-pointer"
+              onClick={() => setOpen(false)}
+            >
+              <Image src="/close.png" alt="Close" width={14} height={14} />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

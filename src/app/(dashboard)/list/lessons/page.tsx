@@ -23,7 +23,7 @@ const LessonListPage = () => {
   const renderRow = (item: Lesson) => (
     <tr
       key={item.id}
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]"
     >
       <td className="flex items-center gap-4 p-4 text-gray-800">{item.subject}</td>
       <td className="text-gray-800">{item.class}</td>
