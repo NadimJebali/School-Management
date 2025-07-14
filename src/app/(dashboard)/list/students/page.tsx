@@ -52,7 +52,7 @@ const StudentListPage = () => {
       <td className="hidden lg:table-cell text-gray-800">{item.address}</td>
       <td>
         <div className="flex items-center gap-2">
-          <Link href={`/list/teachers/${item.id}`}>
+          <Link href={`/list/students/${item.id}`}>
             <button className="w-7 h-7 flex items-center justify-center hover:cursor-pointer rounded-full bg-[#C3EBFA]">
               <Image src="/view.png" alt="View" width={16} height={16} />
             </button>
