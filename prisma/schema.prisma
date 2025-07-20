@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -190,6 +189,7 @@ enum UserSex {
   MALE
   FEMALE
 }
+
 
 enum Day {
   MONDAY
