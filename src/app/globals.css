@@ -100,3 +100,13 @@ body {
 .rbc-toolbar-label{
   color: #000 !important;
 }
+
+/* globals.css or add with Tailwind config */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
