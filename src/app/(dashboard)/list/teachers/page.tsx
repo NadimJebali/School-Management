@@ -70,8 +70,8 @@ const renderRow = (item: TeacherList) => (
       </div>
     </td>
     <td className="hidden md:table-cell text-[#1F2937]">{item.username}</td>
-    <td className="hidden md:table-cell text-[#1F2937]">{item.subjects.map(subject=>subject.name).join(",")}</td>
-    <td className="hidden md:table-cell text-[#1F2937]">{item.classes.map(classItem=>classItem.name).join(",")}</td>
+    <td className="hidden md:table-cell text-[#1F2937]">{item.subjects.map(subject=>subject.name).join(", ")}</td>
+    <td className="hidden md:table-cell text-[#1F2937]">{item.classes.map(classItem=>classItem.name).join(", ")}</td>
     <td className="hidden lg:table-cell text-[#1F2937]">{item.phone}</td>
     <td className="hidden lg:table-cell text-[#1F2937]">{item.address}</td>
     <td>
@@ -107,7 +107,13 @@ const TeacherListPage = async ({searchParams}:{searchParams:{[key:string]:string
         if(value !== undefined){
         switch(key){
           case "classId":
-            query.lessons = {some:{classId:parseInt(value),}}
+            query.lessons = {some:{classId:parseInt(value),},};
+            break;
+          case "search":
+            query.name = {contains:value, mode:"insensitive"}
+            break;
+            default:
+              break;
         }
       }
     }
@@ -124,7 +130,7 @@ const TeacherListPage = async ({searchParams}:{searchParams:{[key:string]:string
           skip:ITEM_PER_PAGE * (p-1),
       }),
       prisma.teacher.count({where: query}),
-  ])
+  ]);
   
   
 
