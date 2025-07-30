@@ -74,22 +74,23 @@ const ExamListPage = async ({searchParams}:{searchParams:{[key:string]:string | 
 
   const query:Prisma.ExamWhereInput = {}
 
-  if(queryParams){
-    for(const [key,value] of Object.entries(queryParams)){
-        if(value !== undefined){
-        switch(key){
-          case "teacherId":
-            query.teacherId = value;
-            break;
+   query.lesson = {};
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
           case "classId":
-            query.classId = parseInt(value);
+            query.lesson.classId = parseInt(value);
+            break;
+          case "teacherId":
+            query.lesson.teacherId = value;
             break;
           case "search":
-            query.lesson = {
-              subject:{
-                name:{contains:value}
-              }
-            }
+            query.lesson.subject = {
+              name: { contains: value, mode: "insensitive" },
+            };
+            break;
+          default:
             break;
         }
       }
@@ -134,7 +135,7 @@ const ExamListPage = async ({searchParams}:{searchParams:{[key:string]:string | 
         </div>
       </div>
       {/* LIST */}
-      <Table columns={columns} renderRow={renderRow} data={examsData} />
+      <Table columns={columns} renderRow={renderRow} data={data} />
       {/* PAGINATION */}
       <Pagination page={p} count={count} />
     </div>
