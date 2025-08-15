@@ -1,61 +1,76 @@
-export default function Announcements() {
-  const announcements = [
-    {
-      id: 1,
-      title: "Parent-Teacher Meeting",
-      date: "2025-01-01",
-      bgColor: "#EDF9FD",
-      message:
-        "Please attend the meeting to discuss your child's academic progress and behavior.",
+
+import prisma from "@/app/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
+import Link from "next/link";
+
+const Announcements = async () => {
+  const { userId, sessionClaims } = await auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+
+  const roleConditions = {
+    teacher: { lessons: { some: { teacherId: userId! } } },
+    student: { students: { some: { id: userId! } } },
+    parent: { students: { some: { parentId: userId! } } },
+  };
+
+  const data = await prisma.announcement.findMany({
+    take: 3,
+    orderBy: { date: "desc" },
+    where: {
+      ...(role !== "admin" && {
+        OR: [
+          { classId: null },
+          { class: roleConditions[role as keyof typeof roleConditions] || {} },
+        ],
+      }),
     },
-    {
-      id: 2,
-      title: "Science Fair Results",
-      date: "2025-01-03",
-      bgColor: "#CFCEFF",
-      message:
-        "Congratulations to all participants. Check the bulletin board for results.",
-    },
-    {
-      id: 3,
-      title: "Exam Schedule Released",
-      date: "2025-01-05",
-      bgColor: "#FAE27C",
-      message:
-        "The final exam schedule is now available on the student portal.",
-    },
-  ];
+  });
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-lg font-semibold text-gray-800">Announcements</h1>
-        <span className="text-xs text-blue-500 cursor-pointer hover:underline">
+    <div className="bg-white p-4 rounded-md shadow-md">
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-semibold text-gray-800">Announcements</h1>
+        <Link href="/list/announcements" className="text-sm text-gray-500">
           View All
-        </span>
+        </Link>
       </div>
-
-      {/* Announcements List */}
-      <div className="flex flex-col gap-4">
-        {announcements.map((a) => (
-          <div
-            key={a.id}
-            className="rounded-lg p-4"
-            style={{ backgroundColor: a.bgColor }}
-          >
-            <div className="flex items-center justify-between mb-1">
-              <h2 className="text-base font-medium text-gray-900">
-                {a.title}
-              </h2>
-              <span className="text-xs bg-white text-gray-500 px-2 py-0.5 rounded-md">
-                {a.date}
+      <div className="flex flex-col gap-4 mt-4">
+        {data[0] && (
+          <div className="bg-[#C3EBFA] rounded-md p-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-medium text-gray-500">{data[0].title}</h2>
+              <span className="text-xs text-gray-400 bg-white rounded-md px-1 py-1">
+                {new Intl.DateTimeFormat("en-GB").format(data[0].date)}
               </span>
             </div>
-            <p className="text-sm text-gray-600">{a.message}</p>
+            <p className="text-sm text-gray-400 mt-1">{data[0].description}</p>
           </div>
-        ))}
+        )}
+        {data[1] && (
+          <div className="bg-[#CFCEFF] rounded-md p-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-medium text-gray-500">{data[1].title}</h2>
+              <span className="text-xs text-gray-400 bg-white rounded-md px-1 py-1">
+                {new Intl.DateTimeFormat("en-GB").format(data[1].date)}
+              </span>
+            </div>
+            <p className="text-sm text-gray-400 mt-1">{data[1].description}</p>
+          </div>
+        )}
+        {data[2] && (
+          <div className="bg-[#FAE27C] rounded-md p-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-medium text-gray-500">{data[2].title}</h2>
+              <span className="text-xs text-gray-400 bg-white rounded-md px-1 py-1">
+                {new Intl.DateTimeFormat("en-GB").format(data[2].date)}
+              </span>
+            </div>
+            <p className="text-sm text-gray-400 mt-1">{data[2].description}</p>
+          </div>
+        )}
       </div>
     </div>
   );
-}
+};
+
+export default Announcements;
