@@ -1,6 +1,6 @@
 import prisma from "@/app/lib/prisma";
 import Image from "next/image";
-import CountChart from "../CountChart";
+import CountChart from "./CountChart";
 
 
 const CountChartContainer = async () => {
@@ -13,7 +13,7 @@ const CountChartContainer = async () => {
   const girls = data.find((d) => d.sex === "FEMALE")?._count || 0;
 
   return (
-    <div className="bg-white rounded-xl w-full h-full p-4 ">
+    <div className="bg-white rounded-xl w-full h-full p-4 shadow-md">
       {/* TITLE */}
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold text-gray-800">Students</h1>
