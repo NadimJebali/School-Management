@@ -2,11 +2,11 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { resultsData, role } from "@/app/lib/data";
 import Image from "next/image";
 import prisma from "@/app/lib/prisma";
 import { ITEM_PER_PAGE } from "@/app/lib/settings";
 import { Prisma } from "@prisma/client";
+import { currentUserId, role } from "@/app/lib/utils";
 
 type ResultList = {
   id:number;
@@ -49,10 +49,10 @@ const columns = [
     accessor: "date",
     className: "hidden md:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "action",
-  },
+  ...(role ==="admin" || role === "teacher" ?[{
+        header: "Actions",
+        accessor: "action",
+      }]: []),
 ];
 
 const renderRow = (item: ResultList) => (
@@ -110,6 +110,29 @@ const ResultListPage = async ({searchParams}:{searchParams:{[key:string]:string 
         }
       }
     }
+  }
+
+  //ROLE CONDITIONS
+  switch (role) {
+    case "admin":
+      break;
+    case "teacher":
+      query.OR = [
+        {exam: {lesson: {teacherId: currentUserId! } } },
+        {assignment: {lesson: {teacherId: currentUserId! } } }
+      ];
+      break;
+
+    case "student":
+      query.studentId = currentUserId!;
+      break;
+
+    case "parent":
+      query.student = {parentId: currentUserId!};
+      break;
+
+    default:
+      break;
   }
 
   const [dataRes, count] = await prisma.$transaction([

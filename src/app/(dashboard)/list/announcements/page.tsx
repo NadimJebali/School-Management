@@ -1,12 +1,13 @@
-import { announcementsData, role } from "@/app/lib/data";
 import prisma from "@/app/lib/prisma";
 import { ITEM_PER_PAGE } from "@/app/lib/settings";
+import { currentUserId, role } from "@/app/lib/utils";
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { Announcement, Class, Prisma } from "@prisma/client";
 import Image from "next/image";
+
 
 type AnnouncementList = Announcement & {class: Class}
 
@@ -24,10 +25,10 @@ const columns = [
     accessor: "date",
     className: "hidden md:table-cell",
   },
-  {
+  ...(role ==="admin" ? [{
     header: "Actions",
     accessor: "action",
-  },
+  }] : []),
 ];
 
 const renderRow = (item: AnnouncementList) => (
@@ -36,7 +37,7 @@ const renderRow = (item: AnnouncementList) => (
     className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF] hover:text-[#4B3F99]"
   >
     <td className="flex items-center gap-4 p-4 text-[#292929]">{item.title}</td>
-    <td className="text-[#292929]">{item.class.name}</td>
+    <td className="text-[#292929]">{item.class?.name || "-"}</td>
     <td className="hidden md:table-cell text-[#292929]">{new Intl.DateTimeFormat("en-US").format(item.date)}</td>
     <td>
       <div className="flex items-center gap-2">
@@ -84,6 +85,20 @@ const AnnouncementListPage = async ({searchParams}:{searchParams:{[key:string]:s
       }
     }
   }
+
+  //ROLE CONDITIONS
+     const roleConditions = {
+      teacher: { lessons: { some: { teacherId: currentUserId! } } },
+      student: { students: { some: { id: currentUserId! } } },
+      parent: { students: { some: { parentId: currentUserId! } } },
+    };
+  
+    query.OR = [
+      { classId: null },
+      {
+        class: roleConditions[role as keyof typeof roleConditions] || {},
+      },
+    ];
 
   const [data, count] = await prisma.$transaction([
       prisma.announcement.findMany({

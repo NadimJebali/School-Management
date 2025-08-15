@@ -30,13 +30,15 @@ const SidebarToggle = ({ children }: SidebarToggleProps) => {
         />
       )}
 
-      {/* Toggle Button */}
-      <button
-        className="lg:hidden text-2xl"
-        onClick={() => setSidebarOpen((prev) => !prev)}
-      >
-        <IoMdMenu size={28} color="#1f2937" />
-      </button>
+      {/* Toggle Button - Only show when sidebar is closed */}
+      {!sidebarOpen && (
+        <button
+          className="fixed top-4 left-4 z-40 lg:hidden text-2xl p-2"
+          onClick={() => setSidebarOpen(true)}
+        >
+          <IoMdMenu size={28} color="#1f2937" />
+        </button>
+      )}
     </>
   );
 };

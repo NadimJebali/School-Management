@@ -2,13 +2,13 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role, teachersData } from "@/app/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import prisma from "@/app/lib/prisma";
 import { ITEM_PER_PAGE } from "@/app/lib/settings";
 import { object } from "zod";
+import { role } from "@/app/lib/utils";
 
 type TeacherList = Teacher & {subjects:Subject[]} & {classes:Class[]}
 
@@ -42,10 +42,10 @@ const columns = [
     accessor: "address",
     className: "hidden lg:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "action",
-  },
+  ...(role ==="admin"?[{
+          header: "Actions",
+          accessor: "action",
+        }]: []),
 ];
 
 

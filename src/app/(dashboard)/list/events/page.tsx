@@ -1,10 +1,11 @@
-import { role, eventsData } from "@/app/lib/data";
 import prisma from "@/app/lib/prisma";
 import { ITEM_PER_PAGE } from "@/app/lib/settings";
+import { currentUserId, role } from "@/app/lib/utils";
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
+import { currentUser } from "@clerk/nextjs/server";
 import { Class, Event, Prisma } from "@prisma/client";
 import Image from "next/image";
 
@@ -34,10 +35,10 @@ const columns = [
     accessor: "endTime",
     className: "hidden md:table-cell",
   },
-  {
-    header: "Actions",
-    accessor: "action",
-  },
+  ...(role ==="admin"?[{
+      header: "Actions",
+      accessor: "action",
+    }]: []),
 ];
 
 const renderRow = (item: EventList) => (
@@ -46,7 +47,7 @@ const renderRow = (item: EventList) => (
     className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-[#F1F0FF]"
   >
     <td className="flex items-center gap-4 p-4 text-[#1F2937]">{item.title}</td>
-    <td className="text-[#1F2937]">{item.class.name}</td>
+    <td className="text-[#1F2937]">{item.class?.name || "-"}</td>
     <td className="hidden md:table-cell text-[#1F2937]">{new Intl.DateTimeFormat("en-US").format(item.startTime)}</td>
     <td className="hidden md:table-cell text-[#1F2937]">{item.startTime.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",hour12:false})}</td>
     <td className="hidden md:table-cell text-[#1F2937]">{item.endTime.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",hour12:false})}</td>
@@ -89,6 +90,20 @@ const EventListPage = async ({searchParams}:{searchParams:{[key:string]:string |
       }
     }
   }
+
+  //ROLE CONDITIONS
+   const roleConditions = {
+    teacher: { lessons: { some: { teacherId: currentUserId! } } },
+    student: { students: { some: { id: currentUserId! } } },
+    parent: { students: { some: { parentId: currentUserId! } } },
+  };
+
+  query.OR = [
+    { classId: null },
+    {
+      class: roleConditions[role as keyof typeof roleConditions] || {},
+    },
+  ];
 
   const [data, count] = await prisma.$transaction([
       prisma.event.findMany({

@@ -2,12 +2,12 @@ import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role, studentsData } from "@/app/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/app/lib/prisma";
 import { ITEM_PER_PAGE } from "@/app/lib/settings";
 import { Class, Prisma, Student } from "@prisma/client";
+import { role } from "@/app/lib/utils";
 
 type StudentList = Student & {class:Class}
 
@@ -17,7 +17,10 @@ const columns = [
   { header: "Grade", accessor: "grade", className: "hidden md:table-cell" },
   { header: "Phone", accessor: "phone", className: "hidden lg:table-cell" },
   { header: "Address", accessor: "address", className: "hidden lg:table-cell" },
-  { header: "Actions", accessor: "action" },
+  ...(role ==="admin"?[{
+          header: "Actions",
+          accessor: "action",
+        }]: []),
 ];
 
 const renderRow = (item: StudentList) => (

@@ -1,6 +1,6 @@
-import { role, classesData } from "@/app/lib/data";
 import prisma from "@/app/lib/prisma";
 import { ITEM_PER_PAGE } from "@/app/lib/settings";
+import { role } from "@/app/lib/utils";
 import FormModal from "@/components/FormModal";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
@@ -30,10 +30,10 @@ const columns = [
     accessor: "supervisor",
     className: "hidden md:table-cell",
   },
-  {
+  ...(role ==="admin"?[{
     header: "Actions",
     accessor: "action",
-  },
+  }]: []),
 ];
 
 const renderRow = (item: ClassList) => (
