@@ -1,3 +1,4 @@
+import { UserButton } from '@clerk/nextjs';
 import Image from 'next/image';
 
 export default function Navbar() {
@@ -35,13 +36,14 @@ export default function Navbar() {
         </div>
 
         {/* Avatar */}
-        <Image
+        {/* <Image
           className="rounded-full border-2 border-gray-200"
           src="/avatar.png"
           alt="avatar"
           width={36}
           height={36}
-        />
+        /> */}
+        <UserButton/>
       </div>
     </div>
   );
