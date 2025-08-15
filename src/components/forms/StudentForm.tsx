@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import InputField from "../InputField";
-import Image from "next/image";
+
 
 const schema = z.object({
   username: z.string().min(3, { message: 'Username must be at least 3 characters long!' }).max(20, { message: 'Username must be at most 20 characters long!' }),
-  email: z.email({message:"Invalid email address!"}),
+  // email: z.email({message:"Invalid email address!"}),
   password:z.string().min(8, { message: 'Password must be at least 8 characters long!' }),
   firstName:z.string().min(1, { message: 'First name is required!' }),
   lastName:z.string().min(1, { message: 'Last name is required!' }),
@@ -53,7 +53,7 @@ const StudentForm = ({type, data}:{type:"create" | "update"; data?:any}) => {
           name="email"
           defaultValue={data?.email}
           register={register}
-          error={errors?.email}
+          // error={errors?.email}
         />
         <InputField
           label="Password"
@@ -127,7 +127,7 @@ const StudentForm = ({type, data}:{type:"create" | "update"; data?:any}) => {
         </div>
         <div className="flex flex-col gap-2 w-full md:w-1/4 justify-center">
           <label className="text-xs text-gray-500 flex items-center gap-2 cursor-pointer" htmlFor="img">
-            <Image src="/upload.png" alt="" width={28} height={28}/>
+            {/* <Image src="/upload.png" alt="" width={28} height={28}/> */}
             <span className="text-gray-800">Upload a photo</span>
           </label>
           <input className="hidden" id="img" type="file" {...register("img")} />
