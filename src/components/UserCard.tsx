@@ -1,10 +1,19 @@
+import prisma from '@/app/lib/prisma';
 import Image from 'next/image';
 
-interface UserCardProps {
-  type: string;
-}
 
-export default function UserCard({ type }: UserCardProps) {
+const UserCard = async ({ type }: {type: "admin" | "teacher" | "student" | "parent" }) => {
+
+  const modelMap : Record<typeof type, any> = {
+    admin: prisma.admin,
+    teacher: prisma.teacher,
+    student: prisma.student,
+    parent: prisma.parent
+  }
+
+  const data = await modelMap[type].count()
+
+
   return (
     <div className="rounded-2xl odd:bg-[#CFCEFF] even:bg-[#FAE27C] p-4 flex-1 min-w-[140px] shadow-md transition-transform hover:scale-[1.02] duration-200">
       {/* Top Bar */}
@@ -17,7 +26,7 @@ export default function UserCard({ type }: UserCardProps) {
 
       {/* Stats */}
       <div className="mt-6">
-        <h1 className="text-3xl font-bold text-gray-800">1,233</h1>
+        <h1 className="text-3xl font-bold text-gray-800">{data}</h1>
         <h2 className="capitalize text-sm font-medium text-gray-600 mt-1 tracking-wide">
           {type}s
         </h2>
@@ -25,3 +34,4 @@ export default function UserCard({ type }: UserCardProps) {
     </div>
   );
 }
+export default UserCard

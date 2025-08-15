@@ -1,7 +1,11 @@
 import { UserButton } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 
-export default function Navbar() {
+ const Navbar = async () =>  {
+
+  
+  const user = await currentUser();
   return (
     <div className="flex items-center justify-between text-xs px-6 py-4 bg-white shadow-sm rounded-lg">
       {/* Search Bar */}
@@ -32,7 +36,7 @@ export default function Navbar() {
         {/* User Info */}
         <div className="flex flex-col items-end">
           <span className="text-sm font-semibold text-black">John Doe</span>
-          <span className="text-xs text-gray-500">Admin</span>
+          <span className="text-xs text-gray-500">{user?.publicMetadata?.role as string}</span>
         </div>
 
         {/* Avatar */}
@@ -47,4 +51,5 @@ export default function Navbar() {
       </div>
     </div>
   );
-}
+};
+export default Navbar;
