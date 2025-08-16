@@ -2,8 +2,6 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { JSX, useState } from "react";
-// import TeacherForm from "./forms/TeacherForm";
-// import StudentForm from "./forms/StudentForm";
 
 const TeacherForm = dynamic(()=>import("./forms/TeacherForm"), {
   loading: ()=> (
