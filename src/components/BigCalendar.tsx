@@ -4,12 +4,11 @@ import { Calendar, momentLocalizer, View, Views, NavigateAction } from "react-bi
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useState } from "react";
-import { calendarEvents } from "@/app/lib/data";
 
 const localizer = momentLocalizer(moment);
 
-const BigCalendar = () => {
-  const [view, setView] = useState<View>(Views.WEEK); // full week including Sat
+const BigCalendar = ({data}:{data:{title:string; start:Date; end:Date}[];}) => {
+  const [view, setView] = useState<View>(Views.WEEK); 
   const [date, setDate] = useState<Date>(new Date());
 
   const handleOnChangeView = (selectedView: View) => {
@@ -20,10 +19,11 @@ const BigCalendar = () => {
     setDate(newDate);
   };
 
+
   return (
     <Calendar
       localizer={localizer}
-      events={calendarEvents}
+      events={data}
       startAccessor="start"
       endAccessor="end"
       views={["week", "day"]}
@@ -33,7 +33,7 @@ const BigCalendar = () => {
       onView={handleOnChangeView}
       onNavigate={handleNavigate}
       min={new Date(2025, 1, 0, 8, 0, 0)}
-      max={new Date(2025, 1, 0, 17, 0, 0)}
+      max={new Date(2025, 1, 0, 19, 0, 0)}
     />
   );
 };

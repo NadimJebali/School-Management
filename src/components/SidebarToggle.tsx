@@ -44,3 +44,4 @@ const SidebarToggle = ({ children }: SidebarToggleProps) => {
 };
 
 export default SidebarToggle;
+
