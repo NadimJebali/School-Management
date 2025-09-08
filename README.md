@@ -62,22 +62,6 @@ It provides role-based dashboards for **Admins, Teachers, Students, and Parents*
 
 ---
 
-## 📂 Project Structure  
-
-school-management/
-│── prisma/ # Prisma schema & migrations
-│── src/
-│ ├── app/ # Next.js App Router pages
-│ ├── components/ # Reusable UI components
-│ ├── lib/ # Utilities & configs
-│ ├── middleware.ts # Role-based auth protection
-│── public/ # Static assets (icons, images)
-│── .env # Environment variables
-│── package.json
-│── README.md
-
----
-
 ## ⚙️ Installation & Setup  
 
 ### 1️⃣ Clone the repo  
